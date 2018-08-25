@@ -5,56 +5,27 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Today List</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{{asset('css/materialize.min.css')}}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{{asset('css/login-todaylist.css')}}"  media="screen,projection"/>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-        </style>
     </head>
-    <body>
-    <div class="flex-center position-ref full-height">
-        @auth
-            <p>welcome {{ Auth::user()->name }}</br>
-                <a href="{{ url('/auth/logout') }}">Logout</a></p>
-        @else
-            <a href="{{ url('auth/redirect/google') }}">Google Login</a>
-        @endauth
-    </div>
+    <body class="cyan">
+        <div id="login-page" class="row">
+            <div class="col z-depth-4 card-panel">
+                <div class="row row-login">
+                    <div class="input-field col s12">
+                        <a href="{{ url('auth/redirect/google') }}" class="btn waves-effect waves-light col s12">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 </html>
