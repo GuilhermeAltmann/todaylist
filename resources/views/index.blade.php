@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            <h4>Your Tasks {{ date('d/m/Y') }}</h4>
+            <h4>My Tasks {{ date('d/m/Y') }}</h4>
         </div>
     </div>
     <div class="row">
@@ -31,7 +31,7 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <div class="row">
-                <h5 class="col s12">Create your task</h5>
+                <h5 class="col s12">Create Task</h5>
             </div>
             <div class="row">
                 <div class="input-field col s12">
