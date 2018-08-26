@@ -6,11 +6,19 @@
         </div>
     </div>
     <div class="row">
+        <div class="col s3">
+            <label for="date_selected"> Select another day</label>
+            <input type="text" class="datepicker" id="date_selected" value="">
+        </div>
+    </div>
+    <div class="row">
         <div class="col s12 m6">
             <div class="card green darken-1">
                 <div class="card-content white-text">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>
+                        I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.
+                    </p>
                 </div>
                 <div class="card-action">
                     <button class="btn green darken-1 white-text"><i class="material-icons left">check</i>Mark as complete</button>
@@ -40,7 +48,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="modal-close waves-effect waves-green btn-flat">
+            <button id="btn-save" class="modal-close waves-effect waves-green btn-flat">
                 Save
             </button>
         </div>
@@ -51,12 +59,30 @@
         $(document).ready(function () {
 
             $('.modal').modal();
+            $('.datepicker').datepicker({
+                'format': 'dd/mm/yyyy',
+                'setDefaultDate': true,
+                'defaultDate': new Date()
+            });
 
             $('#open-modal').click(function () {
 
                 $('.modal').modal('open');
             });
-            ;
+
+            $('#btn-save').click(function () {
+
+                var task = $('#task').val();
+
+                $.ajax({
+                    url: "/task/store",
+                    method: "POST",
+                    data: { task: task }
+                }).done(function() {
+
+                        //location.reload();
+                });
+            });
         });
     </script>
 @endsection
