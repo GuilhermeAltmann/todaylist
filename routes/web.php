@@ -18,7 +18,7 @@ Route::group( ['middleware' => 'auth' ], function() {
 });
 
 /** Login */
-Route::get('login', 'HomeController@index')->name('login');
+Route::get('login', 'HomeController@login')->name('login');
 
 /** Auth */
 Route::get('auth/callback/{provider}', 'Auth\SocialAuthController@callback');

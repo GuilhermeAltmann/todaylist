@@ -14,6 +14,7 @@
     <div class="row">
         <div class="col s12 m6">
             <div class="card green darken-1">
+
                 <div class="card-content white-text">
                     <p>
                         I am a very simple card. I am good at containing small bits of information.
@@ -58,7 +59,7 @@
     <script>
         $(document).ready(function () {
 
-            $('.modal').modal();
+            $('#modal1').modal();
             $('.datepicker').datepicker({
                 'format': 'dd/mm/yyyy',
                 'setDefaultDate': true,
@@ -67,7 +68,7 @@
 
             $('#open-modal').click(function () {
 
-                $('.modal').modal('open');
+                $('#modal1').modal('open');
             });
 
             $('#btn-save').click(function () {

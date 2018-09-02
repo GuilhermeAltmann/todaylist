@@ -15,6 +15,9 @@ class TaskController extends Controller
      */
     public function index()
     {
+
+        $tasks = Task::where('active', 1)->get();
+
         return view('index');
     }
 
