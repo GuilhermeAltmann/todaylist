@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            <h4>My Tasks {{ date('d/m/Y') }}</h4>
+            <h4>My Tasks {{ $date != '' ? $date : date('d/m/Y') }}</h4>
         </div>
     </div>
     <div class="row">
@@ -12,78 +12,98 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12 m6">
-            <div class="card green darken-1">
-
-                <div class="card-content white-text">
-                    <p>
-                        I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.
-                    </p>
+        @foreach($tasks as $task)
+            @php
+                $color = is_null($task->date_finished) ? 'red': 'green';
+            @endphp
+            <div class="col s12 m6">
+                    <div class="card {{$color}} darken-1">
+                        <div class="card-content white-text">
+                            <p>
+                                {{$task->task}}
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn {{$color}} darken-1 white-text"><i
+                                        class="material-icons left">check</i>Mark
+                                as
+                                complete
+                            </button>
+                            <button class="btn {{$color}} darken-1 white-text"><i
+                                        class="material-icons left">delete_forever</i>Delete
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-action">
-                    <button class="btn green darken-1 white-text"><i class="material-icons left">check</i>Mark as complete</button>
-                    <button class="btn green darken-1 white-text"><i class="material-icons left">delete_forever</i>Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="fixed-action-btn direction-top">
-            <button id="open-modal" class="btn-floating btn-large waves-effect waves-light red">
-                <i class="material-icons">add</i>
-            </button>
-        </div>
-    </div>
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <h5 class="col s12">Create Task</h5>
+                @endforeach
             </div>
             <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="task" class="materialize-textarea"></textarea>
-                    <label for="task">Task</label>
+                <div class="fixed-action-btn direction-top">
+                    <button id="open-modal" class="btn-floating btn-large waves-effect waves-light red">
+                        <i class="material-icons">add</i>
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button id="btn-save" class="modal-close waves-effect waves-green btn-flat">
-                Save
-            </button>
-        </div>
-    </div>
-@endsection
-@section('javascript')
-    <script>
-        $(document).ready(function () {
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <div class="row">
+                        <h5 class="col s12">Create Task</h5>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="task" class="materialize-textarea"></textarea>
+                            <label for="task">Task</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-save" class="modal-close waves-effect waves-green btn-flat">
+                        Save
+                    </button>
+                </div>
+            </div>
+            @endsection
+        @section('javascript')
+            <script>
+                $(document).ready(function () {
 
-            $('#modal1').modal();
-            $('.datepicker').datepicker({
-                'format': 'dd/mm/yyyy',
-                'setDefaultDate': true,
-                'defaultDate': new Date()
-            });
+                    $('#modal1').modal();
 
-            $('#open-modal').click(function () {
+                    $('.datepicker').datepicker({
+                        'format': 'dd/mm/yyyy',
+                        'setDefaultDate': true,
+                        'defaultDate': new Date()
+                    });
 
-                $('#modal1').modal('open');
-            });
+                    $('#open-modal').click(function () {
 
-            $('#btn-save').click(function () {
+                        $('#modal1').modal('open');
+                    });
 
-                var task = $('#task').val();
+                    $('#btn-save').click(function () {
 
-                $.ajax({
-                    url: "/task/store",
-                    method: "POST",
-                    data: { task: task }
-                }).done(function() {
+                        var task = $('#task').val();
 
-                        //location.reload();
+                        $.ajax({
+                            url: "/task/store",
+                            method: "POST",
+                            data: {task: task}
+                        }).done(function () {
+
+                            location.reload();
+                        });
+                    });
+
+                    $('.datepicker').change(function () {
+
+                        location.replace("?date=" + $('.datepicker').val());
+                    });
+
+                    if('{{$date}}' != ''){
+
+                        $('.datepicker').val('{{$date}}');
+                    }
                 });
-            });
-        });
-    </script>
+            </script>
 @endsection

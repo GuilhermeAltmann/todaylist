@@ -13,7 +13,7 @@
 
 /** Home */
 Route::group( ['middleware' => 'auth' ], function() {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'TaskController@index');
     Route::post('task/store', 'TaskController@store');
 });
 

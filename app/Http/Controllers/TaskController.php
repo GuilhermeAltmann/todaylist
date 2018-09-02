@@ -13,12 +13,31 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $today = new \DateTime();
 
-        $tasks = Task::where('active', 1)->get();
+        $format = '%d/%m/%Y';
+        $date = $request->get('date');
+        $dateSearch = $date;
 
-        return view('index');
+        if(is_null($date)){
+
+            $format = '%Y-%m-%d';
+            $dateSearch = $today->format('Y-m-d');
+            $date = '';
+        }
+
+        $tasks = Task::whereRaw("DATE_FORMAT(created_at, '{$format}') = '{$dateSearch}'")
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->orderBy('date_finished', 'desc')
+            ->get();
+
+        return view('index', [
+            'tasks' => $tasks,
+            'date' => $date
+        ]);
     }
 
     public function store(Request $request)
